@@ -1,11 +1,9 @@
 import socket
 
-# Konfigurasi server
 HOST = 'localhost'
 PORT = 8081
 BUFFER_SIZE = 4096
 
-# Fungsi untuk mengirim permintaan ke server
 def send_request(method):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((HOST, PORT))
