@@ -2,12 +2,10 @@ import socket
 import select
 import threading
 
-# Konfigurasi server
 HOST = 'localhost'
 PORT = 8081
 BUFFER_SIZE = 4096
 
-# Konten respons
 HTTP_RESPONSES = {
     200: 'HTTP/1.1 200 OK.',
     301: 'HTTP/1.1 301 Moved Permanently.',
@@ -16,7 +14,6 @@ HTTP_RESPONSES = {
     500: 'HTTP/1.1 500 Internal Server Error.',
 }
 
-# Fungsi untuk menghandle permintaan klien
 def handle_client_request(client_socket):
     request_data = client_socket.recv(BUFFER_SIZE).decode()
     method = request_data.split(' ')[0]
@@ -34,7 +31,6 @@ def handle_client_request(client_socket):
     client_socket.sendall(response.encode())
     client_socket.close()
 
-# Fungsi utama untuk menjalankan server
 def run_server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -57,7 +53,6 @@ def run_server():
             else:
                 data = sock.recv(BUFFER_SIZE)
                 if data:
-                    # Tangani permintaan klien di thread terpisah
                     t = threading.Thread(target=handle_client_request, args=(sock,))
                     t.start()
                 else:
